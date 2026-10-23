@@ -12,6 +12,69 @@ Speaking pace is about 130 words a minute. Each part says how long it should tak
 
 ---
 
+## About the project
+
+### What the assignment asks
+
+Project 10 is from *Applied projects for an introductory linear algebra class* (Anna Zemlyanova): **"Discrete dynamical systems, linear transformations of the plane, and the Chaos Game."** The goal is to use matrix mappings of the plane R² in the form of a Chaos Game to produce fractals. There are 13 tasks and 3 questions, and the deliverable is one Python file, `lab10.py`.
+
+### The idea in one paragraph
+
+A **dynamical system** is a rule that gives the next state from the current one. When we only look at it in steps (k = 0, 1, 2, …) it is a **discrete** dynamical system: x<sub>k+1</sub> = f(x<sub>k</sub>). The **Chaos Game** (Michael Barnsley, *Fractals Everywhere*) is such a system on the plane: start at a random point, pick a corner of a polygon at random, jump a fraction *r* of the way toward it, and repeat. Thousands of random jumps do not give a random cloud. They settle onto one fixed shape, often a fractal.
+
+### The mathematics
+
+Each jump is a linear transformation of the plane followed by a shift:
+
+> **T(x) = T · (x − v) + v**,  with T = [ r 0 ; 0 r ]
+
+- **x − v** moves the chosen corner *v* to the origin.
+- **T ·** shrinks the whole plane by the ratio *r* (in Task 6, T also rotates it by θ = π/18).
+- **+ v** moves it back. The corner *v* itself never moves, so it is the fixed point of that map.
+
+Each corner gives one map, and each map sends the whole shape onto a smaller copy of itself next to that corner. The final picture (the **attractor**) is exactly the union of those shrunken copies. That is why the result is **self-similar**, and why it looks the same on every run even though every jump is random.
+
+- If the copies overlap or exactly cover the shape (the square with r = ½), the points just fill the area and there is **no fractal**.
+- If the copies leave gaps (ratio 1/3, or the corner rules), the gaps repeat at every scale and a **fractal** appears.
+
+The **Barnsley fern** (Task 11) uses the same idea with four different maps y = T<sub>j</sub> x + Q<sub>j</sub>, chosen with probabilities 85%, 7%, 7% and 1%.
+
+### The 13 tasks and what each one shows
+
+1. **Task 1:** triangle corners from `np.linspace(0, 2π, 4)`; the last angle is deleted (Q1).
+2. **Task 2:** the matrix T = ½·I ("jump halfway") and a random start point.
+3. **Task 3:** plot the corners, the start point and Num = 10,000 points with one `plt.plot`.
+4. **Task 4:** the loop T @ (x − v) + v gives the **Sierpinski triangle**.
+5. **Task 5:** ratio 1/3, so the three copies separate with gaps.
+6. **Task 6:** shrink by ½ *and* rotate by π/18, so the triangle twists.
+7. **Task 7:** a square with ratio ½ gives **no fractal**; the four copies tile the square.
+8. **Task 8:** the square with ratio 1/3 gives a fractal (Q2).
+9. **Task 9:** the square where a corner can't be picked twice in a row.
+10. **Task 10:** the square where the next corner can't be opposite the previous one.
+11. **Task 11:** the **Barnsley fern**, four maps with unequal probabilities.
+12. **Task 12:** a hexagon with ratio ¼; experiment with the ratio (Q3).
+13. **Task 13:** a pentagon with ratio 2/5 where a corner can't repeat, giving a snowflake.
+
+### Answers to the three questions
+
+- **Q1. What does deleting t[3] do?** `linspace(0, 2π, 4)` gives 0, 2π/3, 4π/3 and 2π. The angle 2π is the same point as 0, so deleting it stops the triangle from having the same corner twice.
+- **Q2. Does the square with ratio 1/3 make a fractal?** **Yes.** With ½ the four copies cover the square exactly; with 1/3 they leave gaps, and the gaps repeat at every level.
+- **Q3. Largest hexagon ratio where the little hexagons don't touch?** Neighbouring corners are 1 apart and each copy reaches *r* toward its neighbour, so they touch when 2r = 1 − r, i.e. r = 1/3. Our answer is **about 0.33**.
+
+### What we built
+
+- **`lab10.py`:** the deliverable. Every task's code from the PDF, copied without changes, one `# %%` cell per task.
+- **Desktop app (`run_gui.bat`):** a window that lists the 13 tasks, shows each one's code, runs it and draws its plot.
+- **Python backend (`api.py`, FastAPI):** runs any cell of `lab10.py` and sends back the points it plotted.
+- **Web presentation (`web/`, Next.js + Tailwind + three.js):** the 3D slides we present with. It does no math itself; every dot it draws comes from running `lab10.py` on the Python backend.
+
+### Two things we noticed in the PDF's code
+
+- **Task 3** writes the jump as T @ (x + v) instead of T @ (x − v) + v. With r = ½ both give ½x + ½v, so the result is the same Sierpinski triangle.
+- **Task 9's** corner rule picks from all 4 corners and then shifts the pick to avoid the last one, so one corner comes up about half the time and the shape is lopsided. As the assignment's code, we kept it exactly as given.
+
+---
+
 ## Part 1 — Opening and the problem  ·  Speaker 1  ·  ~1:30
 
 Good morning everyone. We're presenting Project 10: *Discrete dynamical systems, linear transformations of the plane, and the Chaos Game.*

@@ -42,6 +42,7 @@ styles = {
     "h1": ParagraphStyle("h1", fontName="Body-Bold", fontSize=20, leading=25, textColor=colors.white),
     "h1meta": ParagraphStyle("h1meta", fontName="Body", fontSize=11, leading=14, textColor=colors.white),
     "h2": ParagraphStyle("h2", fontName="Body-Bold", fontSize=15, leading=19, textColor=INK, spaceBefore=10, spaceAfter=6),
+    "h3": ParagraphStyle("h3", fontName="Body-Bold", fontSize=13.5, leading=18, textColor=colors.HexColor("#1e3a8a"), spaceBefore=12, spaceAfter=4, keepWithNext=1),
     "body": ParagraphStyle("body", fontName="Body", fontSize=12, leading=18, textColor=INK, spaceBefore=4, spaceAfter=8, alignment=TA_LEFT),
     "list": ParagraphStyle("list", fontName="Body", fontSize=12, leading=17, textColor=INK, leftIndent=18, bulletIndent=4, spaceAfter=4),
     "formula": ParagraphStyle("formula", fontName="Body-Bold", fontSize=15, leading=20, textColor=INK, leftIndent=14, spaceBefore=4, spaceAfter=10),
@@ -55,6 +56,7 @@ styles = {
 def inline(text):
     """Markdown bold/italic/code → reportlab markup."""
     text = text.replace("&", "&amp;").replace("<", "&lt;").replace(">", "&gt;")
+    text = re.sub(r"&lt;(/?sub)&gt;", r"<\1>", text)  # keep x<sub>k</sub> subscripts
     text = re.sub(r"`([^`]+)`", r'<font name="Code">\1</font>', text)
     text = re.sub(r"\*\*(.+?)\*\*", r"<b>\1</b>", text)
     # Demo cues inside a sentence stand out in green.
@@ -104,6 +106,10 @@ def render_lines(lines):
         if not stripped or stripped == "---":
             flush()
             continue
+        if stripped.startswith("### "):
+            flush()
+            out.append(Paragraph(inline(stripped[4:]), styles["h3"]))
+            continue
         demo = re.match(r"^\*\*\[DEMO\]([^*]*)\*\*(.*)$", stripped)
         if demo:
             flush()
@@ -151,7 +157,8 @@ def main():
     text = SOURCE.read_text(encoding="utf-8")
     sections = parse_sections(text)
     parts = [s for s in sections if s[0].startswith("Part ")]
-    extras = [s for s in sections if not s[0].startswith("Part ")]
+    about = [s for s in sections if s[0].startswith("About")]
+    extras = [s for s in sections if not s[0].startswith("Part ") and s not in about]
 
     story = []
     # ---- cover ----
@@ -183,6 +190,20 @@ def main():
     story.append(Paragraph(
         "Live presentation: start_presentation.bat on the laptop, or the Vercel link. Press F for full screen, "
         "→ for the next animation, N to show these lines on screen.", styles["small"]))
+    story.append(Spacer(1, 18))
+    story.append(Paragraph("Contents", styles["h3"]))
+    contents = ["About the project: the assignment, the mathematics, the 13 tasks, the answers and what we built"]
+    contents += [f"{h.split('·')[1].strip()}: {h.split('·')[0].split('—', 1)[-1].strip()}" for h, _ in parts]
+    contents += [h for h, _ in extras]
+    for n, line in enumerate(contents, start=1):
+        story.append(Paragraph(inline(line), styles["list"], bulletText=f"{n}."))
+
+    # ---- the project explained ----
+    for heading, lines in about:
+        story.append(PageBreak())
+        story.append(speaker_header(inline(heading), "The whole project, before the script", colors.HexColor("#1e293b")))
+        story.append(Spacer(1, 6))
+        story += render_lines(lines)
 
     # ---- one section per speaker ----
     for i, (heading, lines) in enumerate(parts):
