@@ -35,7 +35,8 @@ export type Slide = {
   layout?: "left" | "center";
   scene: (step: number, d: Deck, live: Live) => SceneState;
   view: (ctx: SlideCtx) => ReactNode;
-  notes: string;
+  /** speaker script for the slide; merged slides give the lines for the current step */
+  notes: string | ((step: number) => string);
 };
 
 // ---------- camera shots ----------
@@ -110,8 +111,9 @@ function jumpLines(set: PointSet, from: number, to: number) {
 const POP: V2[] = Array.from({ length: 9 }, (_, k) => [-0.55 + k * 0.29, -0.85 + 0.2 * 1.3 ** k]);
 
 // ---------- slides ----------
+// Written one idea per slide; SLIDES at the bottom merges related ones.
 
-export const SLIDES: Slide[] = [
+const ALL: Slide[] = [
   // ======================= PART 1 =======================
   {
     id: "title",
@@ -425,7 +427,7 @@ export const SLIDES: Slide[] = [
     },
     view: ({ step, d }) => (
       <>
-        <Kicker>Task 1 · Step one</Kicker>
+        <Kicker>Part 2 · {SPEAKERS[1]} · Task 1 · Step one</Kicker>
         <Title>The corners</Title>
         <CodeBlock
           code={code(d, 1)}
@@ -445,7 +447,7 @@ export const SLIDES: Slide[] = [
         </Reveal>
       </>
     ),
-    notes: "One: the corners. np.linspace(0, 2π, 4) gives four angles, and we delete the last one. That's Question 1: the last angle, 2π, is the same point as 0, so deleting it avoids a duplicate corner. Cosine and sine then give three corners on a circle of radius 1.",
+    notes: "Thanks. Our code is one Python file, lab10.py, using NumPy for the math and Matplotlib for plots. Four steps. One: the corners. np.linspace(0, 2π, 4) gives four angles, and we delete the last one. That's Question 1: the last angle, 2π, is the same point as 0, so deleting it avoids a duplicate corner. Cosine and sine then give three corners on a circle of radius 1.",
   },
   {
     id: "matrix",
@@ -621,7 +623,7 @@ export const SLIDES: Slide[] = [
     }),
     view: ({ step, d }) => (
       <>
-        <Kicker>Task 5</Kicker>
+        <Kicker>Part 3 · {SPEAKERS[2]} · Task 5</Kicker>
         <Title>Change the ratio</Title>
         <div className="card mt-2 flex items-center gap-4">
           <span className="math-md">T =</span>
@@ -633,7 +635,7 @@ export const SLIDES: Slide[] = [
         </Reveal>
       </>
     ),
-    notes: "Ratio. [DEMO Task 5] With r = 1/3, the small triangles separate with gaps.",
+    notes: "Thanks. Now we change one thing at a time. Ratio. [DEMO Task 5] With r = 1/3, the small triangles separate with gaps.",
   },
   {
     id: "rotation",
@@ -1027,4 +1029,69 @@ export const SLIDES: Slide[] = [
     ),
     notes: "Thank you for listening. We're happy to take questions.",
   },
+];
+
+// ---------- merging ----------
+
+const byId = (id: string) => {
+  const slide = ALL.find((s) => s.id === id);
+  if (!slide) throw new Error(`No slide "${id}"`);
+  return slide;
+};
+
+/** Play several slides one after another as a single slide (their steps run back to back). */
+function combine(id: string, name: string, ids: string[]): Slide {
+  const parts = ids.map(byId);
+  const locate = (step: number) => {
+    let local = step;
+    for (const part of parts) {
+      if (local < part.steps) return { part, local };
+      local -= part.steps;
+    }
+    const last = parts[parts.length - 1];
+    return { part: last, local: last.steps - 1 };
+  };
+  return {
+    id,
+    name,
+    part: parts[0].part,
+    tasks: [...new Set(parts.flatMap((p) => p.tasks ?? []))],
+    steps: parts.reduce((n, p) => n + p.steps, 0),
+    layout: parts[0].layout,
+    scene: (step, d, live) => {
+      const { part, local } = locate(step);
+      return part.scene(local, d, live);
+    },
+    view: (ctx) => {
+      const { part, local } = locate(ctx.step);
+      // keyed by the inner slide, so its content fades in when the next one starts
+      return (
+        <div key={part.id} className="sub-enter h-full">
+          {part.view({ ...ctx, step: local })}
+        </div>
+      );
+    },
+    notes: (step) => {
+      const { part, local } = locate(step);
+      return typeof part.notes === "string" ? part.notes : part.notes(local);
+    },
+  };
+}
+
+export const SLIDES: Slide[] = [
+  combine("intro", "Title & the question", ["title", "hook"]),
+  byId("dynamical"),
+  byId("rules"),
+  byId("mapping"),
+  combine("corners-matrix", "1–2 · Corners & matrix", ["corners", "matrix"]),
+  combine("loop-plot", "3–4 · Loop & plot once", ["loop", "plot"]),
+  combine("ratio-rotation", "Ratio & rotation", ["ratio", "rotation"]),
+  combine("square-q2", "Square & Q2", ["square", "q2"]),
+  combine("corner-rules", "Corner rules", ["notsame", "notopposite"]),
+  byId("pentagon"),
+  byId("q3"),
+  byId("fern"),
+  byId("app"),
+  byId("learned"),
+  combine("ending", "Back to the question", ["closing", "thanks"]),
 ];

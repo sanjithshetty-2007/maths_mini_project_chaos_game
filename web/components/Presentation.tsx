@@ -244,7 +244,7 @@ export default function Presentation() {
               <div className="mb-1 text-xs uppercase tracking-widest text-white/40">
                 Part {slide.part} · {SPEAKERS[slide.part - 1]} · script
               </div>
-              <p>{slide.notes}</p>
+              <p>{typeof slide.notes === "string" ? slide.notes : slide.notes(pos.step)}</p>
             </aside>
           )}
         </>
