@@ -3,3 +3,4 @@ __pycache__/
 .vercel/
 vercel-deploy/
 tools/pdf_preview/
+*.mp4
