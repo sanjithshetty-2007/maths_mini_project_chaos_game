@@ -25,13 +25,15 @@ export type ParticleTarget = {
   xy: Float32Array;
   /** one colour for all, or rgb triples per point */
   colors: string | Float32Array;
-  mode?: "morph" | "iterate" | "grow" | "burst";
+  mode?: "morph" | "iterate" | "grow" | "burst" | "rise";
   duration?: number;
   /** iterate: points before this index are already in place */
   startAt?: number;
   size?: number;
   /** random depth spread (z) */
   depth?: number;
+  /** a depth (z) for every point, for real 3D shapes */
+  z?: Float32Array;
   /** pull each copy onto its own layer in z */
   layers?: { copy: Int16Array; copies: number; gap: number };
   /** burst: where the dots fly out from */
@@ -405,7 +407,7 @@ export class Stage {
     const depth = t.depth ?? 0.04;
 
     let minY = Infinity, maxY = -Infinity;
-    if (mode === "grow") {
+    if (mode === "grow" || mode === "rise") {
       for (let i = 0; i < n; i++) {
         minY = Math.min(minY, t.xy[i * 2 + 1]);
         maxY = Math.max(maxY, t.xy[i * 2 + 1]);
@@ -418,6 +420,7 @@ export class Stage {
       const x = t.xy[src * 2] ?? 0;
       const y = t.xy[src * 2 + 1] ?? 0;
       let z = (this.seed[i] - 0.5) * depth;
+      if (t.z) z += t.z[src] ?? 0;
       if (t.layers && i < n) {
         const c = t.layers.copy[i];
         if (c >= 0) z += (c - (t.layers.copies - 1) / 2) * t.layers.gap;
@@ -442,6 +445,8 @@ export class Stage {
         }
       } else if (mode === "grow" && i < n) {
         fx = 0; fy = minY; fz = 0; alphaFrom = 0;
+      } else if (mode === "rise" && i < n) {
+        fx = x; fy = minY; fz = z; alphaFrom = 0;
       } else if (mode === "burst" && i < n) {
         fx = t.origin?.[0] ?? 0; fy = t.origin?.[1] ?? 0; fz = 0; alphaFrom = 0;
       }
@@ -455,6 +460,9 @@ export class Stage {
       // when each dot moves
       if (mode === "iterate") {
         this.delay[i] = i < startAt ? 0 : i < n ? (i - startAt) / Math.max(1, n - startAt) : 0;
+      } else if (mode === "rise") {
+        const yn = (y - minY) / Math.max(1e-6, maxY - minY);
+        this.delay[i] = Math.min(1, this.seed[i] * 0.55 + yn * 0.45);
       } else if (mode === "grow") {
         const yn = (y - minY) / Math.max(1e-6, maxY - minY);
         this.delay[i] = Math.min(1, yn * 0.85 + this.seed[i] * 0.15);
@@ -470,6 +478,8 @@ export class Stage {
       this.run(t.duration ?? 4, 1, window, 0.0);
     } else if (mode === "grow") {
       this.run(t.duration ?? 4.5, 1, 0.25, 0.15);
+    } else if (mode === "rise") {
+      this.run(t.duration ?? 4, 0.6, 0.5, 0);
     } else if (mode === "burst") {
       this.run(t.duration ?? 2.2, 0.4, 1, 0.6);
     } else {

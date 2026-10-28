@@ -10,6 +10,7 @@ import type { Deck } from "./deck";
 import { hexKey } from "./deck";
 import type { CameraShot, Marker, ParticleTarget, SceneState } from "./stage";
 import { COPY_COLORS, firstPoints, type PointSet, type V2 } from "./data";
+import { forest, terrain } from "./procedural";
 import { Chip, Counter, Kicker, Matrix, Reveal, Title } from "@/components/ui";
 
 // Put your names here.
@@ -680,6 +681,65 @@ export const SLIDES: Slide[] = [
       [
         "Thanks. The last task is the Barnsley fern. It's the same idea with two changes: four different maps, y = Tj x + Qj, where Qj shifts the point, and they're not chosen equally.",
         "One map, picked 85% of the time, builds the leaf; two maps at 7% each make the side leaves; and one at 1% draws the stem. Four 2×2 matrices and four probabilities make a whole fern.",
+      ][step],
+  },
+  {
+    id: "applications",
+    part: 5,
+    name: "Real-world applications",
+    steps: 2,
+    scene: (step) => {
+      const s = step === 0 ? forest() : terrain();
+      return {
+        camera: step === 0 ? { pos: [-0.85, 0.15, 4.3], target: [-0.85, -0.15, 0], dur: 2.4 } : { pos: [-0.85, 1.55, 3.7], target: [-0.85, -0.55, 0], dur: 2.6 },
+        particles: {
+          key: step === 0 ? "forest" : "terrain",
+          xy: s.xy.subarray(0, s.n * 2),
+          z: s.z,
+          colors: s.colors,
+          mode: "rise",
+          duration: step === 0 ? 4.5 : 4,
+          size: step === 0 ? 2.6 : 3.2,
+          depth: 0,
+        },
+        wobble: 0.004,
+      };
+    },
+    view: ({ step }) => {
+      const uses = [
+        {
+          title: "Computer graphics & procedural generation",
+          text: "Fractal geometry generates vegetation, textures, mountains and landscapes for games, simulations and visual effects. Repeated rules create the detail, so no one has to design every element by hand.",
+          link: "Each tree here is one repeated rule: every branch splits into smaller copies of itself, scaled and turned by a rotation matrix.",
+        },
+        {
+          title: "Terrain & landscape modelling",
+          text: "Fractal and procedural methods produce realistic mountains, coastlines and rough terrain for computer-generated environments, games and simulations.",
+          link: "These mountains come from one repeated rule: split every square and nudge its midpoint up or down by a random amount that halves each time.",
+        },
+      ];
+      return (
+        <>
+          <Kicker>Beyond the classroom</Kicker>
+          <Title>Real-world applications</Title>
+          <div className="mt-4 space-y-3">
+            {uses.map((u, i) => (
+              <Reveal key={u.title} step={step} at={i} delay={i === 0 ? 500 : 300}>
+                <div className={`card transition-opacity duration-700 ${step === i ? "" : "opacity-50"}`}>
+                  <p className="text-[clamp(16px,1.3vw,21px)] font-semibold text-white">{u.title}</p>
+                  <p className="body mt-1">{u.text}</p>
+                  <p className="mt-2 text-sm text-[#5ee6a8]">↳ {u.link}</p>
+                </div>
+              </Reveal>
+            ))}
+          </div>
+        </>
+      );
+    },
+    notes: (step) =>
+      [
+        "Where is this used outside the classroom? First, computer graphics and procedural generation: fractal geometry generates vegetation, textures, mountains and landscapes for video games, simulations and visual effects. Repeated rules create the detail, so nobody designs every element by hand. Each tree in this forest is one repeated rule: every branch splits into smaller copies of itself, scaled down and turned by a rotation matrix, the same shrink-and-rotate idea as our Task 6.",
+        "Second, terrain and landscape modelling: fractal methods generate realistic mountains, coastlines and rough terrain. These mountains come from one repeated rule: split every square and nudge its midpoint by a random amount that halves at each level. Like our experiments, repeated mathematical operations produce complex geometric structures.",
       ][step],
   },
   {

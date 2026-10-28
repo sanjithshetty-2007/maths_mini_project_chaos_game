@@ -31,8 +31,10 @@ LONGER = {
     "#2.3": 7.0,   # 10,000 points fill in
     "#4.2": 7.0,   # the Sierpinski triangle fills in
     "#9.1": 5.5,   # the fern grows
-    "#10.1": 5.0,  # the three lessons appear one by one
-    "#11.2": 5.5,  # the dot bursts into the pattern, then "Thank you"
+    "#10.1": 6.0,  # the fractal forest grows
+    "#10.2": 6.0,  # the fractal mountains rise
+    "#11.1": 5.0,  # the three lessons appear one by one
+    "#12.2": 5.5,  # the dot bursts into the pattern, then "Thank you"
 }
 
 

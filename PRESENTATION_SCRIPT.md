@@ -1,7 +1,7 @@
 # Project 10 — The Chaos Game: Presentation Script
 
-**Length:** about 6 minutes (5 to 7 allowed)  ·  **Speakers:** 5  ·  **Demo:** the presentation (`start_presentation.bat`), already open in full screen
-Speaking pace is about 130 words a minute. Each part says how long it should take; **[DEMO]** lines are where to press → (next) while you talk. The whole deck is 11 slides and 27 presses.
+**Length:** about 6½ minutes (5 to 7 allowed)  ·  **Speakers:** 5  ·  **Demo:** the presentation (`start_presentation.bat`), already open in full screen
+Speaking pace is about 130 words a minute. Each part says how long it should take; **[DEMO]** lines are where to press → (next) while you talk. The whole deck is 12 slides and 29 presses.
 
 | Part | Speaker | Topic | Time |
 |---|---|---|---|
@@ -9,7 +9,7 @@ Speaking pace is about 130 words a minute. Each part says how long it should tak
 | 2 | Speaker 2 | The matrix mapping and the Sierpinski triangle | 1:10 – 2:40 |
 | 3 | Speaker 3 | Changing the map: ratio, rotation, square (Q2) | 2:40 – 3:40 |
 | 4 | Speaker 4 | Corner rules and the hexagon (Q3) | 3:40 – 4:50 |
-| 5 | Speaker 5 | Barnsley fern, what we learned, closing | 4:50 – 6:00 |
+| 5 | Speaker 5 | Barnsley fern, real-world applications, closing | 4:50 – 6:25 |
 
 ---
 
@@ -39,6 +39,11 @@ Each corner gives one map, and each map sends the whole shape onto a smaller cop
 - If the copies leave gaps (ratio 1/3, or the corner rules), the gaps repeat at every scale and a **fractal** appears.
 
 The **Barnsley fern** (Task 11) uses the same idea with four different maps y = T<sub>j</sub> x + Q<sub>j</sub>, chosen with probabilities 85%, 7%, 7% and 1%.
+
+### Real-world applications
+
+- **Computer graphics and procedural generation:** fractal geometry generates vegetation, textures, mountains and landscapes for video games, simulations and visual effects; repeated rules create the detail. *Connection:* the Chaos Game builds complex patterns from simple repeated transformations.
+- **Terrain and landscape modelling:** fractal and procedural methods generate realistic mountains, coastlines and rough terrain. *Connection:* our experiments show repeated mathematical operations producing complex geometric structures.
 
 ### The 13 tasks and what each one shows
 
@@ -131,11 +136,19 @@ Thanks. So far we changed the matrix. Now we keep the matrix and change **which 
 
 ---
 
-## Part 5 — Barnsley fern and closing  ·  Speaker 5  ·  ~1:10
+## Part 5 — Fern, applications and closing  ·  Speaker 5  ·  ~1:35
 
 **[DEMO] press →: the fern grows.** Thanks. The last task is the **Barnsley fern**. It's the same idea with two changes: four different maps, *y = Tⱼ x + Qⱼ*, where *Qⱼ* shifts the point; and they're not chosen equally.
 
 **[DEMO] press →.** One map, picked 85% of the time, builds the leaf; two maps at 7% each make the side leaves; and one at 1% draws the stem. Four 2×2 matrices and four probabilities make a whole fern.
+
+**[DEMO] press →: a forest grows out of the ground.** Where is this used outside the classroom?
+
+1. **Computer graphics and procedural generation.** Fractal geometry helps generate complex visual patterns, including vegetation, textures, mountains and landscapes used in video games, simulations and visual effects. Repeated mathematical rules create detailed structures without anyone designing every element by hand. *Connection to our project:* the Chaos Game uses repeated transformations to generate complex patterns from simple geometric rules. *On screen (optional, if time allows):* each tree in this forest is one repeated rule: every branch splits into smaller copies of itself, scaled down and turned by a rotation matrix, the same shrink-and-rotate idea as our Task 6.
+
+**[DEMO] press →: mountains rise up.**
+
+2. **Terrain and landscape modelling.** Fractal and procedural methods can generate realistic-looking mountains, coastlines and rough terrain for computer-generated environments, games and simulations. *Connection to our project:* our experiments show how repeated mathematical operations can produce complex geometric structures. *On screen (optional, if time allows):* these mountains come from one repeated rule: split every square and nudge its midpoint up or down by a random amount that halves at each level.
 
 **[DEMO] press →.** **Three things we learned:**
 1. One matrix mapping, repeated thousands of times, can create very complicated shapes.
@@ -152,8 +165,8 @@ Thank you for listening. We're happy to take questions.
 
 ## Before you present
 - Open the presentation **before** you start (`start_presentation.bat`), wait for it to finish loading, and press **F** for full screen.
-- Do a full practice run with a timer. The script is about 6 minutes, including clicking and waiting for the animations.
-  - **Running long?** Speaker 4 can skip the Task 10 sentence and just press → past it (saves about 10 seconds).
+- Do a full practice run with a timer. The script is about 6½ minutes, including clicking and waiting for the animations.
+  - **Running long?** Speaker 4 can skip the Task 10 sentence and just press → past it (saves about 10 seconds), and Speaker 5 can say only the first sentence of each application (saves about 15 seconds).
   - **Running short?** On the hexagon slide, drag the slider and press the green **Try r =** button to show another ratio live.
 - Wait for each animation to finish before you press → again; the longest ones (the jumps, the fern) take about 6 seconds.
 - Each run gives a slightly different picture, which is normal; the overall shape stays the same.

@@ -9,6 +9,7 @@ Discrete dynamical systems, linear transformations of the plane, and the Chaos G
 | `api.py` | FastAPI backend that runs the cells and returns the plotted points |
 | `web/` | Next.js + three.js presentation that draws those points (`start_presentation.bat`) |
 | `PRESENTATION_SCRIPT.md` | The 5-speaker script; `Presentation_Script_5_Speakers.pdf` is the printable version |
+| `MATH_NOTES.md` | Maths notes and viva questions; `Maths_Notes_and_Viva_Questions.pdf` is the printable version |
 
 ## Run it on a laptop
 
@@ -27,8 +28,9 @@ then commit and push:
 py tools\sync_python_to_web.py
 ```
 
-To rebuild the script PDF after editing `PRESENTATION_SCRIPT.md`:
+To rebuild the PDFs after editing `PRESENTATION_SCRIPT.md` or `MATH_NOTES.md`:
 
 ```bash
 py tools\make_script_pdf.py
+py tools\make_notes_pdf.py
 ```
