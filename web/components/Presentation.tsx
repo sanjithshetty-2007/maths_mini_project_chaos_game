@@ -5,7 +5,6 @@
 // N shows the speaker's script for the slide.
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import { getHealth } from "@/lib/api";
 import { loadDeck, rerun, type Deck } from "@/lib/deck";
 import { PART_TITLES, SLIDES, SPEAKERS, type Live } from "@/lib/slides";
 import { Stage } from "@/lib/stage";
@@ -32,7 +31,6 @@ export default function Presentation() {
   const [busy, setBusy] = useState<string | null>(null);
   const [hexRatio, setHexRatio] = useState(0.33);
   const [hexLive, setHexLive] = useState(false);
-  const [cells, setCells] = useState<number | null>(null);
   const [idle, setIdle] = useState(false);
 
   // ---- load everything from the Python backend ----
@@ -43,7 +41,6 @@ export default function Presentation() {
         setPos(readHash());
       })
       .catch((e: Error) => setError(e.message));
-    getHealth().then((h) => setCells(h.cells)).catch(() => setCells(null));
   }, []);
 
   useEffect(() => {
@@ -207,11 +204,9 @@ export default function Presentation() {
               })}
             </nav>
             <div className="flex items-center gap-2">
-              {slide.tasks?.map((t) => <span key={t} className="task-chip">Task {t}</span>)}
-              <span className="backend-chip" title="Python backend (FastAPI)">
-                <span className={`live-dot ${cells ? "on" : ""}`} />
-                Python{cells ? ` · ${cells} cells` : ""}
-              </span>
+              {slide.tasks?.length ? (
+                <span className="task-chip">{slide.tasks.length > 1 ? "Tasks" : "Task"} {slide.tasks.join(" · ")}</span>
+              ) : null}
             </div>
           </header>
 
@@ -264,7 +259,7 @@ export default function Presentation() {
           ) : (
             <div className="text-center">
               <p className="kicker">Project 10 · The Chaos Game</p>
-              <p className="mt-3 text-white/70">Running lab10.py on the Python backend… {loading.done}/{loading.total}</p>
+              <p className="mt-3 text-white/70">Preparing the fractals… {loading.done}/{loading.total}</p>
               <div className="loader-bar"><div style={{ width: `${(loading.done / loading.total) * 100}%` }} /></div>
             </div>
           )}

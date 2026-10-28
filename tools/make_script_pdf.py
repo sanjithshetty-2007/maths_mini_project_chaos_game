@@ -19,7 +19,7 @@ from reportlab.platypus import (KeepTogether, PageBreak, Paragraph, SimpleDocTem
 
 ROOT = Path(__file__).resolve().parent.parent
 SOURCE = ROOT / "PRESENTATION_SCRIPT.md"
-OUTPUT = ROOT / "Presentation_Script_4_Speakers.pdf"
+OUTPUT = ROOT / "Presentation_Script_5_Speakers.pdf"
 
 # Segoe UI covers π, −, ½, ², θ, → and the other symbols the script uses.
 FONTS = Path("C:/Windows/Fonts")
@@ -32,7 +32,7 @@ pdfmetrics.registerFontFamily("Body", normal="Body", bold="Body-Bold", italic="B
 
 INK = colors.HexColor("#1b2133")
 MUTED = colors.HexColor("#5b6478")
-SPEAKER_COLORS = [colors.HexColor(c) for c in ("#2563eb", "#7c3aed", "#d97706", "#059669")]
+SPEAKER_COLORS = [colors.HexColor(c) for c in ("#2563eb", "#7c3aed", "#d97706", "#059669", "#db2777")]
 DEMO_BG = colors.HexColor("#ecfdf5")
 DEMO_LINE = colors.HexColor("#10b981")
 
@@ -163,7 +163,7 @@ def main():
     story = []
     # ---- cover ----
     story.append(Paragraph("Project 10: The Chaos Game", styles["title"]))
-    story.append(Paragraph("Presentation script for 4 speakers · about 6 minutes (5 to 7 allowed)", styles["subtitle"]))
+    story.append(Paragraph(f"Presentation script for {len(parts)} speakers · about 6 minutes (5 to 7 allowed)", styles["subtitle"]))
     rows = [[Paragraph("Part", styles["cellb"]), Paragraph("Speaker", styles["cellb"]),
              Paragraph("Topic", styles["cellb"]), Paragraph("Time", styles["cellb"])]]
     for heading, _ in parts:
@@ -180,7 +180,7 @@ def main():
         ("BOTTOMPADDING", (0, 0), (-1, -1), 6),
     ]
     for i in range(1, len(rows)):
-        style.append(("LINEBEFORE", (0, i), (0, i), 4, SPEAKER_COLORS[(i - 1) % 4]))
+        style.append(("LINEBEFORE", (0, i), (0, i), 4, SPEAKER_COLORS[(i - 1) % len(SPEAKER_COLORS)]))
     table.setStyle(TableStyle(style))
     story += [table, Spacer(1, 14)]
     story.append(Paragraph(
@@ -188,11 +188,11 @@ def main():
         "Speaking pace is about 130 words a minute.", styles["small"]))
     story.append(Spacer(1, 8))
     story.append(Paragraph(
-        "Live presentation: start_presentation.bat on the laptop, or the Vercel link. Press F for full screen, "
+        "Live presentation: start_presentation.bat on the laptop. Press F for full screen, "
         "→ for the next animation, N to show these lines on screen.", styles["small"]))
     story.append(Spacer(1, 18))
     story.append(Paragraph("Contents", styles["h3"]))
-    contents = ["About the project: the assignment, the mathematics, the 13 tasks, the answers and what we built"]
+    contents = ["About the project: the assignment, the mathematics, the 13 tasks and the answers"]
     contents += [f"{h.split('·')[1].strip()}: {h.split('·')[0].split('—', 1)[-1].strip()}" for h, _ in parts]
     contents += [h for h, _ in extras]
     for n, line in enumerate(contents, start=1):
@@ -211,7 +211,7 @@ def main():
         bits = [b.strip() for b in heading.split("·")]
         title = bits[0]
         meta = " · ".join(b.replace("~", "about ") for b in bits[1:])
-        story.append(speaker_header(inline(title), inline(meta), SPEAKER_COLORS[i % 4]))
+        story.append(speaker_header(inline(title), inline(meta), SPEAKER_COLORS[i % len(SPEAKER_COLORS)]))
         story.append(Spacer(1, 12))
         story += render_lines(lines)
 

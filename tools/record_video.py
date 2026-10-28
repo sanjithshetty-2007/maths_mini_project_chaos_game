@@ -24,13 +24,15 @@ WIDTH, HEIGHT, FPS = 1920, 1080, 30
 PAUSE = 3.0  # seconds to hold after each press
 # Steps whose animation itself runs longer than the pause: wait for it to finish, plus a beat.
 LONGER = {
-    "#1.1": 4.0,   # dots burst into a cloud
+    "#1.1": 4.0,   # title forms from dots
+    "#1.2": 4.5,   # dots burst into the triangle
     "#2.1": 5.5,   # population dots appear one by one
-    "#3.4": 7.0,   # nine slow jumps
-    "#3.5": 7.0,   # 10,000 points fill in
-    "#6.2": 7.0,   # the loop draws 10,000 points
-    "#12.1": 5.5,  # the fern grows
-    "#15.2": 4.5,  # the dot bursts into the pattern
+    "#2.2": 7.0,   # nine slow jumps
+    "#2.3": 7.0,   # 10,000 points fill in
+    "#4.2": 7.0,   # the Sierpinski triangle fills in
+    "#9.1": 5.5,   # the fern grows
+    "#10.1": 5.0,  # the three lessons appear one by one
+    "#11.2": 5.5,  # the dot bursts into the pattern, then "Thank you"
 }
 
 

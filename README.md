@@ -8,7 +8,7 @@ Discrete dynamical systems, linear transformations of the plane, and the Chaos G
 | `lab10_gui.py` | Desktop window that runs each cell and shows its plot (`run_gui.bat`) |
 | `api.py` | FastAPI backend that runs the cells and returns the plotted points |
 | `web/` | Next.js + three.js presentation that draws those points (`start_presentation.bat`) |
-| `PRESENTATION_SCRIPT.md` | The 4-speaker script; `Presentation_Script_4_Speakers.pdf` is the printable version |
+| `PRESENTATION_SCRIPT.md` | The 5-speaker script; `Presentation_Script_5_Speakers.pdf` is the printable version |
 
 ## Run it on a laptop
 
