@@ -5,11 +5,11 @@ Speaking pace is about 130 words a minute. Each part says how long it should tak
 
 | Part | Speaker | Topic | Time |
 |---|---|---|---|
-| 1 | Speaker 1 | Opening, dynamical systems, the Chaos Game | 0:00 – 1:10 |
-| 2 | Speaker 2 | The matrix mapping and the Sierpinski triangle | 1:10 – 2:40 |
-| 3 | Speaker 3 | Changing the map: ratio, rotation, square (Q2) | 2:40 – 3:40 |
-| 4 | Speaker 4 | Corner rules and the hexagon (Q3) | 3:40 – 4:50 |
-| 5 | Speaker 5 | Barnsley fern, real-world applications, closing | 4:50 – 6:25 |
+| 1 | Saathvik | Opening, dynamical systems, the Chaos Game | 0:00 – 1:10 |
+| 2 | Sammedh | The matrix mapping and the Sierpinski triangle | 1:10 – 2:40 |
+| 3 | Sanjith | Changing the map: ratio, rotation, square (Q2) | 2:40 – 3:40 |
+| 4 | Samarth R K | Corner rules and the hexagon (Q3) | 3:40 – 4:50 |
+| 5 | Shashank | Barnsley fern, real-world applications, closing | 4:50 – 6:25 |
 
 ---
 
@@ -74,7 +74,7 @@ The **Barnsley fern** (Task 11) uses the same idea with four different maps y = 
 
 ---
 
-## Part 1 — Opening and the Chaos Game  ·  Speaker 1  ·  ~1:10
+## Part 1 — Opening and the Chaos Game  ·  Saathvik  ·  ~1:10
 
 Good morning everyone. We're presenting Project 10: *Discrete dynamical systems, linear transformations of the plane, and the Chaos Game.*
 
@@ -84,11 +84,11 @@ Good morning everyone. We're presenting Project 10: *Discrete dynamical systems,
 
 **[DEMO] press →: the jumps.** The **Chaos Game**, by Michael Barnsley, is exactly that, in the plane. Take the corners of a triangle and a random starting point. Choose a random corner and jump halfway toward it. Then choose again, and again.
 
-**[DEMO] press →: 10,000 points.** Repeat that ten thousand times, and instead of a random cloud we get this. Over to [Speaker 2] to explain why.
+**[DEMO] press →: 10,000 points.** Repeat that ten thousand times, and instead of a random cloud we get this. Over to Sammedh to explain why.
 
 ---
 
-## Part 2 — The math of one jump  ·  Speaker 2  ·  ~1:30
+## Part 2 — The math of one jump  ·  Sammedh  ·  ~1:30
 
 **[DEMO] press →: the formula.** Thanks. So what is one jump, mathematically? It's a **matrix mapping**:
 
@@ -100,11 +100,11 @@ Good morning everyone. We're presenting Project 10: *Discrete dynamical systems,
 
 **[DEMO] press →: the triangle fills in.** With T = ½ times the identity and ten thousand random jumps, we get the **Sierpinski triangle**.
 
-**[DEMO] press →: the copies separate.** Why this shape? Each corner's map squeezes the whole picture into a half-size copy next to that corner, so the triangle is exactly three smaller copies of itself: it's **self-similar**. Every map pulls points toward this same shape, called the **attractor**, so random jumps give the same picture every time. Over to [Speaker 3].
+**[DEMO] press →: the copies separate.** Why this shape? Each corner's map squeezes the whole picture into a half-size copy next to that corner, so the triangle is exactly three smaller copies of itself: it's **self-similar**. Every map pulls points toward this same shape, called the **attractor**, so random jumps give the same picture every time. Over to Sanjith.
 
 ---
 
-## Part 3 — Changing the map  ·  Speaker 3  ·  ~1:00
+## Part 3 — Changing the map  ·  Sanjith  ·  ~1:00
 
 Thanks. Now we change one thing at a time in the matrix.
 
@@ -114,11 +114,11 @@ Thanks. Now we change one thing at a time in the matrix.
 
 **[DEMO] press →: Task 7.** Now a **square**: four corners, r = 1/2. Surprise: there's **no fractal**. The four half-size copies cover the square exactly, so the points just fill it in.
 
-**[DEMO] press →: Task 8.** *Question 2: is there a fractal with ratio 1/3?* **Yes.** Four copies a third of the size can't cover the square, so the gaps stay, at every level. Over to [Speaker 4].
+**[DEMO] press →: Task 8.** *Question 2: is there a fractal with ratio 1/3?* **Yes.** Four copies a third of the size can't cover the square, so the gaps stay, at every level. Over to Samarth R K.
 
 ---
 
-## Part 4 — Corner rules and the hexagon  ·  Speaker 4  ·  ~1:10
+## Part 4 — Corner rules and the hexagon  ·  Samarth R K  ·  ~1:10
 
 Thanks. So far we changed the matrix. Now we keep the matrix and change **which corners are allowed**.
 
@@ -132,11 +132,11 @@ Thanks. So far we changed the matrix. Now we keep the matrix and change **which 
 
 **[DEMO] press →: r = 0.36.** At 0.36 they're too big and overlap.
 
-**[DEMO] press →: r = 0.33.** Neighbouring corners are 1 apart and each copy reaches *r* toward its neighbour, so they touch when 2r = 1 − r, which is r = 1/3. Our answer is **about 0.33**. Over to [Speaker 5].
+**[DEMO] press →: r = 0.33.** Neighbouring corners are 1 apart and each copy reaches *r* toward its neighbour, so they touch when 2r = 1 − r, which is r = 1/3. Our answer is **about 0.33**. Over to Shashank.
 
 ---
 
-## Part 5 — Fern, applications and closing  ·  Speaker 5  ·  ~1:35
+## Part 5 — Fern, applications and closing  ·  Shashank  ·  ~1:35
 
 **[DEMO] press →: the fern grows.** Thanks. The last task is the **Barnsley fern**. It's the same idea with two changes: four different maps, *y = Tⱼ x + Qⱼ*, where *Qⱼ* shifts the point; and they're not chosen equally.
 
@@ -166,7 +166,7 @@ Thank you for listening. We're happy to take questions.
 ## Before you present
 - Open the presentation **before** you start (`start_presentation.bat`), wait for it to finish loading, and press **F** for full screen.
 - Do a full practice run with a timer. The script is about 6½ minutes, including clicking and waiting for the animations.
-  - **Running long?** Speaker 4 can skip the Task 10 sentence and just press → past it (saves about 10 seconds), and Speaker 5 can say only the first sentence of each application (saves about 15 seconds).
+  - **Running long?** Samarth R K can skip the Task 10 sentence and just press → past it (saves about 10 seconds), and Shashank can say only the first sentence of each application (saves about 15 seconds).
   - **Running short?** On the hexagon slide, drag the slider and press the green **Try r =** button to show another ratio live.
 - Wait for each animation to finish before you press → again; the longest ones (the jumps, the fern) take about 6 seconds.
 - Each run gives a slightly different picture, which is normal; the overall shape stays the same.

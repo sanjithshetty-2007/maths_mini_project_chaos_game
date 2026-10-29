@@ -14,7 +14,7 @@ import { forest, terrain } from "./procedural";
 import { Chip, Counter, Kicker, Matrix, Reveal, Title } from "@/components/ui";
 
 // Put your names here.
-export const SPEAKERS = ["Speaker 1", "Speaker 2", "Speaker 3", "Speaker 4", "Speaker 5"];
+export const SPEAKERS = ["Saathvik", "Sammedh", "Sanjith", "Samarth R K", "Shashank"];
 export const PART_TITLES = ["The question & the game", "The math of one jump", "Changing the map", "Corner rules & Q3", "Fern & conclusion"];
 
 export type Live = {
@@ -250,7 +250,7 @@ export const SLIDES: Slide[] = [
       [
         "A dynamical system is one where the next state depends on the current state, like a population that grows once a year. Since we only look at it in steps, it's a discrete dynamical system: x(k+1) = f(x(k)).",
         "The Chaos Game, by Michael Barnsley, is exactly that, in the plane. Take the corners of a triangle and a random starting point. Choose a random corner and jump halfway toward it. Then choose again, and again.",
-        "Repeat that ten thousand times, and instead of a random cloud we get this. Over to Speaker 2 to explain why.",
+        "Repeat that ten thousand times, and instead of a random cloud we get this. Over to Sammedh to explain why.",
       ][step],
   },
 
@@ -414,7 +414,7 @@ export const SLIDES: Slide[] = [
       [
         "To build it, we first need the corners. We split the angles from 0 to 2π and take cosine and sine to get points on the unit circle. That's Question 1: why delete the last angle? Because 2π is the same point as 0, so we'd have the same corner twice. We did all of this in Python, with NumPy for the vectors and matrices and Matplotlib for the plots.",
         "Now take T = one half times the identity, start at a random point, and apply the map with a random corner ten thousand times. The result is the Sierpinski triangle.",
-        "Why this shape? Each corner's map squeezes the whole picture into a half-size copy next to that corner, so the triangle is exactly three smaller copies of itself: it's self-similar. Every map pulls points toward this same shape, called the attractor, so the random jumps give the same picture every time. Over to Speaker 3.",
+        "Why this shape? Each corner's map squeezes the whole picture into a half-size copy next to that corner, so the triangle is exactly three smaller copies of itself: it's self-similar. Every map pulls points toward this same shape, called the attractor, so the random jumps give the same picture every time. Over to Sanjith.",
       ][step],
   },
 
@@ -509,7 +509,7 @@ export const SLIDES: Slide[] = [
     notes: (step) =>
       [
         "Now a square, four corners, with r = 1/2. Surprise: there's no fractal. The four half-size copies cover the square exactly, so the points just fill it in.",
-        "Question 2: is there a fractal with ratio 1/3? Yes. Four copies a third of the size can't cover the square, so the gaps stay, at every level. Over to Speaker 4.",
+        "Question 2: is there a fractal with ratio 1/3? Yes. Four copies a third of the size can't cover the square, so the gaps stay, at every level. Over to Samarth R K.",
       ][step],
   },
 
@@ -632,7 +632,7 @@ export const SLIDES: Slide[] = [
       [
         "Question 3 uses a hexagon. With ratio 0.25 we get six separate little hexagons. What's the largest ratio where they still don't touch?",
         "At 0.36 they're too big and overlap.",
-        "Neighbouring corners are 1 apart and each copy reaches r toward its neighbour, so they touch when 2r = 1 − r, which is r = 1/3. Our answer is about 0.33. Over to Speaker 5.",
+        "Neighbouring corners are 1 apart and each copy reaches r toward its neighbour, so they touch when 2r = 1 − r, which is r = 1/3. Our answer is about 0.33. Over to Shashank.",
       ][step],
   },
 
