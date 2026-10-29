@@ -524,8 +524,8 @@ export const SLIDES: Slide[] = [
       step === 0
         ? { camera: RIGHT, particles: copies(d, "9", { size: 2.8 }), markers: starMarkers("cr-sq", d.sets["9"].vertices, "#ffffff", 30) }
         : step === 1
-          ? { camera: { pos: [-0.4, 1.8, 3.2], target: [-0.9, 0, 0] }, particles: copies(d, "10", { size: 2.8, layers: layers(d.sets["10"], 0.22) }), markers: starMarkers("cr-sq", d.sets["10"].vertices, "#ffffff", 30) }
-          : { camera: RIGHT_TILT, particles: copies(d, "13", { layers: layers(d.sets["13"], 0.3), duration: 2.4 }), markers: null },
+          ? { camera: RIGHT, particles: copies(d, "10", { size: 2.8 }), markers: starMarkers("cr-sq", d.sets["10"].vertices, "#ffffff", 30) }
+          : { camera: RIGHT, particles: copies(d, "13", { size: 2.4, duration: 2.4 }), markers: starMarkers("cr-pent", d.sets["13"].vertices, "#ffffff", 26) },
     view: ({ step, d }) => {
       if (step === 0) {
         const s = d.sets["9"];
